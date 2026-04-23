@@ -115,12 +115,12 @@ window.addEventListener('load', () => {
 const timelineData = {
   church: {
     img:   'dove.png',
-    title: 'სიონის ტაძარი',
-    body:  '12:00 — ნათლობის ცერემონია'
+    title: 'სიონის ტაძარი ტაძარი',
+    body:  '13:00 — ნათლობის ცერემონია'
   },
   reception: {
     img:   'horse.png',
-    title: 'რესტორანი მეტეხი',
+    title: 'დარბაზი სალხინაშვილების',
     body:  'სადღეგრძელო სუფრა და სიხარული'
   }
 };
