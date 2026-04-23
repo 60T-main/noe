@@ -2,6 +2,67 @@
    NOE BAPTISM — script.js
 ───────────────────────────────────────────── */
 
+/* ── MUSIC ── */
+const bgMusic     = document.getElementById('bgMusic');
+const musicToggle = document.getElementById('musicToggle');
+
+bgMusic.volume = 0;
+
+let fadeInterval = null;
+
+function fadeAudio(targetVol, duration, onDone) {
+  if (fadeInterval) clearInterval(fadeInterval);
+  const steps    = 40;
+  const stepTime = duration / steps;
+  const startVol = bgMusic.volume;
+  const delta    = (targetVol - startVol) / steps;
+  let   current  = 0;
+  fadeInterval = setInterval(() => {
+    current++;
+    bgMusic.volume = Math.min(1, Math.max(0, startVol + delta * current));
+    if (current >= steps) {
+      clearInterval(fadeInterval);
+      fadeInterval = null;
+      if (onDone) onDone();
+    }
+  }, stepTime);
+}
+
+musicToggle.addEventListener('click', () => {
+  if (bgMusic.paused) {
+    bgMusic.play();
+    musicToggle.classList.add('playing');
+    fadeAudio(0.1, 800);
+  } else {
+    fadeAudio(0, 600, () => bgMusic.pause());
+    musicToggle.classList.remove('playing');
+  }
+});
+
+/* Pause when browser is backgrounded / closed on mobile */
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') {
+    bgMusic.pause();
+  } else if (!bgMusic.paused || musicToggle.classList.contains('playing')) {
+    bgMusic.play();
+  }
+});
+
+/* Auto-start on first user interaction (bypasses browser autoplay block) */
+let musicStarted = false;
+function startMusicOnInteraction() {
+  if (musicStarted) return;
+  musicStarted = true;
+  bgMusic.play().then(() => {
+    musicToggle.classList.add('playing');
+    fadeAudio(0.1, 1800);
+  }).catch(() => {});
+  document.removeEventListener('touchstart', startMusicOnInteraction);
+  document.removeEventListener('click', startMusicOnInteraction);
+}
+document.addEventListener('touchstart', startMusicOnInteraction, { once: true });
+document.addEventListener('click',      startMusicOnInteraction, { once: true });
+
 /* ── SCROLL TO TOP ON EVERY LOAD ── */
 window.scrollTo(0, 0);
 history.scrollRestoration = 'manual';
@@ -13,6 +74,13 @@ const overlay = document.getElementById('intro-overlay');
 // Bear flies in from left → center (0ms)
 window.addEventListener('load', () => {
   window.scrollTo(0, 0);
+
+  // Try to start music immediately on load
+  bgMusic.play().then(() => {
+    musicStarted = true;
+    musicToggle.classList.add('playing');
+    fadeAudio(0.1, 1800);
+  }).catch(() => { /* autoplay blocked — first interaction will trigger it */ });
 
   // Slight delay so CSS transition is active
   requestAnimationFrame(() => {

@@ -91,6 +91,63 @@ body.intro-locked {
   100% { transform: translateY(calc(-100vh - 320px)) rotate(var(--b-tilt, 0deg)); }
 }
 
+/* ─── MUSIC TOGGLE ─── */
+.music-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 600;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.music-toggle__track {
+  display: block;
+  width: 52px;
+  height: 28px;
+  border-radius: 14px;
+  background: var(--blue-light);
+  border: 1.5px solid var(--blue-mid);
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.music-toggle.playing .music-toggle__track {
+  background: var(--blue-mid);
+}
+
+.music-toggle__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: 0 1px 4px rgba(92,112,128,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.music-toggle.playing .music-toggle__thumb {
+  transform: translateX(24px);
+}
+
+.music-toggle__icon {
+  font-size: 11px;
+  color: var(--blue-mid);
+  line-height: 1;
+  transition: color 0.3s ease;
+}
+
+.music-toggle.playing .music-toggle__icon {
+  color: var(--text-dark);
+}
+
 /* ─── INTRO OVERLAY ─── */
 #intro-overlay {
   position: fixed;
