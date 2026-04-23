@@ -43,12 +43,13 @@ musicToggle.addEventListener('click', () => {
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') {
     bgMusic.pause();
-  } else if (!bgMusic.paused || musicToggle.classList.contains('playing')) {
-    bgMusic.play();
+  } else {
+    bgMusic.play().catch(() => {});
   }
 });
 
 /* Auto-start on first user interaction (bypasses browser autoplay block) */
+/* musicStarted is reset on every page load — music always starts fresh */
 let musicStarted = false;
 function startMusicOnInteraction() {
   if (musicStarted) return;
