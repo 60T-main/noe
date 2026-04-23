@@ -372,7 +372,8 @@ body.intro-locked {
   position: relative;
   background-color: var(--bg-main);
   padding: 48px 20px 64px;
-  overflow: hidden;
+  overflow-y: visible;
+  overflow-x: clip;
 }
 
 .program-title {
@@ -398,7 +399,7 @@ body.intro-locked {
 
 .clouds-bleed-over{
   position: absolute;
-  top: 35rem;
+  top: -9%;
   width: 100%;
   left: -1rem;
 
