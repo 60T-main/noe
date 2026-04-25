@@ -194,3 +194,82 @@ modalOverlay.addEventListener('click', e => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeModal();
 });
+
+/* ── RSVP FORM ── */
+const rsvpForm = document.getElementById('rsvpForm');
+const rsvpSuccess = document.getElementById('rsvpSuccess');
+const API_URL = 'https://weddsites-backend.vercel.app/api/rsvp';
+const PROJECT_ID = 'noe-baptism-2026';
+
+function splitNameAndSurname(fullName) {
+  const clean = fullName.trim().replace(/\s+/g, ' ');
+  if (!clean) return { name: '', surname: '' };
+
+  const parts = clean.split(' ');
+  const name = parts.shift() || '';
+  const surname = parts.join(' ');
+  return { name, surname };
+}
+
+async function submitRsvp(payload) {
+  const requestBody = {
+    projectId: PROJECT_ID,
+    name: payload.name,
+    surname: payload.surname || '',
+    attendance: payload.attendance,
+    guestCount:
+      payload.guestCount === undefined || payload.guestCount === null || payload.guestCount === ''
+        ? undefined
+        : Number(payload.guestCount)
+  };
+
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(requestBody)
+  });
+
+  const result = await response.json();
+  if (!response.ok) {
+    throw new Error(result.error || 'RSVP submit failed');
+  }
+
+  return result;
+}
+
+if (rsvpForm && rsvpSuccess) {
+  rsvpForm.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const formData = new FormData(rsvpForm);
+    const fullName = (formData.get('guestName') || '').toString().trim();
+    const nameParts = splitNameAndSurname(fullName);
+    const attendance = formData.get('attendance');
+    const guestCountRaw = formData.get('guestCount');
+    const submitButton = rsvpForm.querySelector('.rsvp-submit');
+
+    if (submitButton) submitButton.disabled = true;
+    rsvpSuccess.textContent = 'იგზავნება...';
+    rsvpSuccess.hidden = false;
+
+    try {
+      await submitRsvp({
+        name: nameParts.name,
+        surname: nameParts.surname,
+        attendance,
+        guestCount: guestCountRaw
+      });
+
+      rsvpSuccess.textContent = `მადლობა, ${fullName}. თქვენი პასუხი მიღებულია.`;
+      rsvpSuccess.hidden = false;
+      rsvpForm.reset();
+    } catch (error) {
+      rsvpSuccess.textContent = error && error.message
+        ? `შეცდომა: ${error.message}`
+        : 'შეცდომა დაფიქსირდა, გთხოვთ სცადოთ თავიდან.';
+      rsvpSuccess.hidden = false;
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+    }
+  });
+}

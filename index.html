@@ -192,6 +192,43 @@
                     data-delay="200"
                 >
             </section>
+            <!-- ═══ RSVP ═══ -->
+            <section class="rsvp" id="rsvp">
+                <h2 class="rsvp-title">დადასტურება</h2>
+                <form class="rsvp-form" id="rsvpForm">
+                    <label class="rsvp-label" for="guestName">სახელი და გვარი</label>
+                    <input
+                        class="rsvp-input"
+                        id="guestName"
+                        name="guestName"
+                        type="text"
+                        required
+                        autocomplete="name"
+                    >
+                    <p class="rsvp-label">დასწრება</p>
+                    <div class="rsvp-options">
+                        <label class="rsvp-option">
+                            <input type="radio" name="attendance" value="yes" required>
+                            <span>წამოვალ</span>
+                        </label>
+                        <label class="rsvp-option">
+                            <input type="radio" name="attendance" value="no" required>
+                            <span>არ წამოვალ</span>
+                        </label>
+                    </div>
+                    <label class="rsvp-label" for="guestCount">რამდენი ადამიანი დაესწრება</label>
+                    <input
+                        class="rsvp-input"
+                        id="guestCount"
+                        name="guestCount"
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                    >
+                    <button class="rsvp-submit" type="submit">გაგზავნა</button>
+                    <p class="rsvp-success" id="rsvpSuccess" hidden></p>
+                </form>
+            </section>
             <!-- ═══ FOOTER ═══ -->
             <footer class="site-footer">
                 <a

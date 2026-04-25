@@ -607,6 +607,133 @@ body.intro-locked {
   50%       { transform: translateY(-10px); }
 }
 
+/* ─── RSVP SECTION ─── */
+.rsvp {
+  background-color: var(--bg-main);
+  padding: 0 20px 64px;
+}
+
+.rsvp-title {
+  font-family: 'SS GEO Brain Melt', serif;
+  font-size: 20px;
+  color: var(--text-dark);
+  letter-spacing: 5px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.rsvp-title::before,
+.rsvp-title::after {
+  content: '✦';
+  font-size: 12px;
+  color: var(--blue-mid);
+  margin: 0 10px;
+  vertical-align: middle;
+}
+
+.rsvp-form {
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 20px 16px;
+  border: 1.5px solid var(--blue-light);
+  border-radius: 20px;
+  background-color: var(--white);
+  box-shadow: 0 4px 18px rgba(168, 197, 217, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rsvp-label {
+  font-size: 13px;
+  color: var(--text-dark);
+  letter-spacing: 1.5px;
+}
+
+.rsvp-input {
+  width: 100%;
+  border: 1.5px solid var(--blue-light);
+  border-radius: 12px;
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+  font-family: 'SS GEO Brain Melt', serif;
+  font-size: 14px;
+  padding: 11px 12px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.rsvp-input:focus {
+  outline: none;
+  border-color: var(--blue-mid);
+  box-shadow: 0 0 0 3px rgba(168, 197, 217, 0.28);
+}
+
+.rsvp-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.rsvp-option {
+  position: relative;
+  display: flex;
+}
+
+.rsvp-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rsvp-option span {
+  width: 100%;
+  border: 1.5px solid var(--blue-light);
+  border-radius: 12px;
+  background-color: var(--bg-main);
+  color: var(--text-soft);
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-align: center;
+  padding: 11px 10px;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.rsvp-option input:checked + span {
+  background-color: var(--blue-mid);
+  border-color: var(--blue-mid);
+  color: var(--text-dark);
+}
+
+.rsvp-submit {
+  margin-top: 2px;
+  border: 1.5px solid var(--blue-mid);
+  border-radius: 12px;
+  background-color: var(--blue-light);
+  color: var(--text-dark);
+  font-family: 'SS GEO Brain Melt', serif;
+  font-size: 14px;
+  letter-spacing: 2px;
+  padding: 11px 12px;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.rsvp-submit:active {
+  transform: translateY(1px);
+}
+
+.rsvp-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.rsvp-success {
+  text-align: center;
+  color: var(--text-soft);
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
 
 
 .site-footer {
